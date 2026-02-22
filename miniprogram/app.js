@@ -1,8 +1,10 @@
 // app.js
+const { envId } = require('./env.js');
+
 App({
   onLaunch: function () {
     this.globalData = {
-      env: "cloud1-5g9uss0gfe250350"
+      env: envId
     };
 
     if (!wx.cloud) {
