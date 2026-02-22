@@ -1,0 +1,12 @@
+{
+  "name": "message",
+  "version": "1.0.0",
+  "description": "消息管理云函数",
+  "main": "index.js",
+  "scripts": {},
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "wx-server-sdk": "~2.6.3"
+  }
+}

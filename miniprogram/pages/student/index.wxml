@@ -1,0 +1,39 @@
+<view class="page">
+  <!-- 搜索栏 -->
+  <view class="search-bar">
+    <input class="search-input" placeholder="搜索姓名或手机号" value="{{keyword}}" bindinput="onSearchInput" />
+    <view class="search-clear" wx:if="{{keyword}}" bindtap="clearSearch">
+      <text class="clear-icon">×</text>
+    </view>
+  </view>
+
+  <!-- 信息列表 -->
+  <view class="student-list">
+    <view class="empty-state" wx:if="{{studentList.length === 0 && keyword}}">
+      <text class="empty-text">未找到匹配结果</text>
+    </view>
+    <view class="student-item" wx:for="{{studentList}}" wx:key="id" bindtap="viewStudent" data-id="{{item.id}}">
+      <view class="student-avatar">
+        <text class="avatar-text">{{item.name.charAt(0)}}</text>
+      </view>
+      <view class="student-info">
+        <view class="student-name">{{item.name}}</view>
+        <view class="student-phone">{{item.phone}}</view>
+        <view class="student-stats">
+          <text class="stat-item">已完成 {{item.completedCount}} 次</text>
+          <text class="stat-item">待完成 {{item.pendingCount}} 次</text>
+        </view>
+      </view>
+      <view class="student-arrow">></view>
+    </view>
+
+    <view class="empty-state" wx:if="{{studentList.length === 0}}">
+      <text class="empty-text">暂无信息</text>
+    </view>
+  </view>
+
+  <!-- 添加按钮 -->
+  <view class="add-btn" bindtap="addStudent">
+    <text class="add-icon">+</text>
+  </view>
+</view>

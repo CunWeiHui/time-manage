@@ -1,0 +1,86 @@
+<view class="page">
+  <!-- 人员信息卡片 -->
+  <view class="student-header">
+    <view class="avatar">
+      <text class="avatar-text">{{student.name.charAt(0)}}</text>
+    </view>
+    <view class="student-basic">
+      <view class="student-name">{{student.name}}</view>
+      <view class="student-phone">{{student.phone}}</view>
+    </view>
+  </view>
+
+  <!-- 统计数据 -->
+  <view class="stats-row">
+    <view class="stat-item">
+      <text class="stat-value">{{student.completedCount}}</text>
+      <text class="stat-label">已完成</text>
+    </view>
+    <view class="stat-divider"></view>
+    <view class="stat-item">
+      <text class="stat-value">{{student.pendingCount}}</text>
+      <text class="stat-label">待完成</text>
+    </view>
+    <view class="stat-divider"></view>
+    <view class="stat-item">
+      <text class="stat-value">{{student.cancelledCount}}</text>
+      <text class="stat-label">已取消</text>
+    </view>
+  </view>
+
+  <!-- 详细信息 -->
+  <view class="info-card">
+    <view class="card-title">详细信息</view>
+
+    <view class="info-item">
+      <text class="label">微信号</text>
+      <text class="value">{{student.wechat || '未设置'}}</text>
+    </view>
+
+    <view class="info-item">
+      <text class="label">备注</text>
+      <text class="value">{{student.remark || '无'}}</text>
+    </view>
+
+    <view class="info-item">
+      <text class="label">添加时间</text>
+      <text class="value">{{student.createTime}}</text>
+    </view>
+
+    <view class="info-item">
+      <text class="label">最后上课</text>
+      <text class="value">{{student.lastClass || '暂无'}}</text>
+    </view>
+  </view>
+
+  <!-- 最近日程 -->
+  <view class="info-card">
+    <view class="card-title">
+      <text>最近日程</text>
+      <text class="view-all" bindtap="viewAllBookings">查看全部</text>
+    </view>
+
+    <view class="booking-item" wx:for="{{recentBookings}}" wx:key="id" bindtap="viewBooking" data-id="{{item.id}}">
+      <view class="booking-date">
+        <text class="date-text">{{item.date}}</text>
+      </view>
+      <view class="booking-time-status">
+        <text class="time-text">{{item.startTime}}-{{item.endTime}}</text>
+        <view class="status status-{{item.status}}">{{item.statusText}}</view>
+      </view>
+    </view>
+
+    <view class="empty-state" wx:if="{{recentBookings.length === 0}}">
+      <text class="empty-text">暂无日程记录</text>
+    </view>
+  </view>
+
+  <!-- 操作按钮 -->
+  <view class="action-buttons">
+    <button class="action-btn primary" bindtap="createBooking" disabled="{{isLoading}}">新建日程</button>
+    <button class="action-btn secondary" bindtap="editStudent">编辑信息</button>
+    <button class="action-btn danger" bindtap="deleteStudent" disabled="{{isLoading}}">
+      {{isLoading ? '' : '删除人员'}}
+    </button>
+  </view>
+</view>

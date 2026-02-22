@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "openapi": []
+  },
+  "triggers": [
+    {
+      "name": "syncHolidaysTimerMorning",
+      "type": "timer",
+      "config": "0 8 * * * *"
+    },
+    {
+      "name": "syncHolidaysTimerEvening",
+      "type": "timer",
+      "config": "0 20 * * * *"
+    }
+  ]
+}

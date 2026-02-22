@@ -1,0 +1,79 @@
+<view class="page">
+  <!-- 筛选器 -->
+  <view class="filter-bar">
+    <scroll-view scroll-x class="filter-scroll">
+      <view class="filter-options">
+        <view
+          class="filter-item {{filterStatus === item.value ? 'active' : ''}}"
+          wx:for="{{statusFilterOptions}}"
+          wx:key="value"
+          data-status="{{item.value}}"
+          bindtap="filterByStatus"
+        >
+          {{item.label}}
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+
+  <!-- 日程列表 -->
+  <view class="booking-list" wx:if="{{!loading}}">
+    <view
+      class="booking-item status-{{item.status}}"
+      wx:for="{{bookingList}}"
+      wx:key="id"
+      data-id="{{item.id}}"
+      bindtap="goToDetail"
+    >
+      <view class="booking-header">
+        <text class="student-name">{{item.studentName}}</text>
+        <view class="status-badge status-{{item.status}}">
+          {{item.statusText}}
+        </view>
+      </view>
+
+      <view class="booking-body">
+        <view class="info-row">
+          <text class="icon">📅</text>
+          <text class="info-text">{{item.dateText}}</text>
+        </view>
+        <view class="info-row">
+          <text class="icon">⏰</text>
+          <text class="info-text">{{item.timeRange}}</text>
+        </view>
+        <view class="info-row">
+          <text class="icon">📚</text>
+          <text class="info-text course-content">{{item.courseContent}}</text>
+        </view>
+        <view class="info-row" wx:if="{{item.remark}}">
+          <text class="icon">📝</text>
+          <text class="info-text remark">{{item.remark}}</text>
+        </view>
+      </view>
+
+      <view class="booking-footer">
+        <text class="create-time">{{item.createTime}}</text>
+        <view class="delete-btn" catchtap="deleteBooking" data-id="{{item.id}}">
+          <text>删除</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 空状态 -->
+    <view class="empty-state" wx:if="{{bookingList.length === 0}}">
+      <text class="empty-icon">📋</text>
+      <text class="empty-text">暂无日程记录</text>
+      <button class="create-btn" bindtap="goToCreate">创建日程</button>
+    </view>
+  </view>
+
+  <!-- 加载中 -->
+  <view class="loading" wx:if="{{loading}}">
+    <text>加载中...</text>
+  </view>
+
+  <!-- 底部新建按钮 -->
+  <view class="fab" bindtap="goToCreate" wx:if="{{bookingList.length > 0}}">
+    <text class="fab-icon">+</text>
+  </view>
+</view>

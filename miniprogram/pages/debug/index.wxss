@@ -1,0 +1,158 @@
+.page {
+  min-height: 100vh;
+  background-color: #ffffff;
+  padding: 20rpx;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 20rpx;
+}
+
+.title {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.info-card {
+  background-color: #fff;
+  border-radius: 16rpx;
+  padding: 30rpx;
+  margin-bottom: 20rpx;
+}
+
+.info-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 16rpx 0;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.info-item:last-child {
+  border-bottom: none;
+}
+
+.label {
+  font-size: 28rpx;
+  color: #666;
+}
+
+.value {
+  font-size: 28rpx;
+  color: #333;
+  font-weight: 500;
+}
+
+.value.success {
+  color: #52c41a;
+}
+
+.value.error {
+  color: #ff4d4f;
+}
+
+.functions-list {
+  background-color: #fff;
+  border-radius: 16rpx;
+  padding: 30rpx;
+  margin-bottom: 20rpx;
+}
+
+.section-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20rpx;
+}
+
+.function-item {
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.function-item:last-child {
+  border-bottom: none;
+}
+
+.function-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8rpx;
+}
+
+.function-name {
+  font-size: 30rpx;
+  color: #333;
+  font-weight: 500;
+}
+
+.function-status {
+  padding: 4rpx 16rpx;
+  border-radius: 20rpx;
+  font-size: 22rpx;
+}
+
+.function-status.checking {
+  background-color: #4A76a8;
+  color: #fff;
+}
+
+.function-status.success {
+  background-color: #f6ffed;
+  color: #52c41a;
+}
+
+.function-status.error {
+  background-color: #fff1f0;
+  color: #ff4d4f;
+}
+
+.function-status.pending {
+  background-color: #f5f5f5;
+  color: #999;
+}
+
+.function-desc {
+  font-size: 24rpx;
+  color: #999;
+}
+
+.actions {
+  display: flex;
+  gap: 16rpx;
+  margin-bottom: 20rpx;
+}
+
+.action-btn {
+  flex: 1;
+  height: 88rpx;
+  line-height: 88rpx;
+  border-radius: 6rpx;
+  font-size: 32rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.tips {
+  background-color: #fff7e6;
+  border-radius: 16rpx;
+  padding: 30rpx;
+}
+
+.tips-title {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #faad14;
+  margin-bottom: 16rpx;
+}
+
+.tips-text {
+  font-size: 26rpx;
+  color: #666;
+  line-height: 1.8;
+  margin-bottom: 8rpx;
+}

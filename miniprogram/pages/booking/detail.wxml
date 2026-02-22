@@ -1,0 +1,74 @@
+<view class="page">
+  <!-- 状态卡片 -->
+  <view class="status-card status-{{booking.status}}">
+    <text class="status-text">{{booking.statusText}}</text>
+  </view>
+
+  <!-- 日程信息 -->
+  <view class="info-card">
+    <view class="card-title">日程信息</view>
+
+    <view class="info-item">
+      <text class="label">人员</text>
+      <text class="value">{{booking.studentName}}</text>
+    </view>
+
+    <view class="info-item">
+      <text class="label">日期</text>
+      <text class="value">{{booking.date}}</text>
+    </view>
+
+    <view class="info-item">
+      <text class="label">时间</text>
+      <text class="value time">{{booking.startTime}} - {{booking.endTime}}</text>
+    </view>
+
+    <view class="info-item">
+      <text class="label">课程内容</text>
+      <text class="value">{{booking.courseContent}}</text>
+    </view>
+
+    <view class="info-item" wx:if="{{booking.remark}}">
+      <text class="label">备注</text>
+      <text class="value">{{booking.remark}}</text>
+    </view>
+
+    <view class="info-item">
+      <text class="label">创建时间</text>
+      <text class="value">{{booking.createTime}}</text>
+    </view>
+  </view>
+
+  <!-- 提醒信息 -->
+  <view class="info-card" wx:if="{{booking.sendReminder}}">
+    <view class="card-title">提醒设置</view>
+
+    <view class="info-item">
+      <text class="label">提醒状态</text>
+      <text class="value">{{booking.reminderSent ? '已发送' : '待发送'}}</text>
+    </view>
+
+    <view class="info-item">
+      <text class="label">提醒时间</text>
+      <text class="value">{{booking.reminderTimeLabel}}</text>
+    </view>
+  </view>
+
+  <!-- 操作按钮 -->
+  <view class="action-buttons">
+    <button class="action-btn confirm" wx:if="{{booking.status === 'pending'}}" bindtap="confirmBooking" disabled="{{isLoading}}">
+      {{isLoading ? '' : '确认日程'}}
+    </button>
+    <button class="action-btn complete" wx:if="{{booking.status === 'confirmed'}}" bindtap="completeBooking" disabled="{{isLoading}}">
+      {{isLoading ? '' : '完成课程'}}
+    </button>
+    <button class="action-btn edit" wx:if="{{booking.status !== 'cancelled' && booking.status !== 'completed'}}" bindtap="editBooking">
+      编辑日程
+    </button>
+    <button class="action-btn cancel" wx:if="{{booking.status !== 'cancelled' && booking.status !== 'completed'}}" bindtap="cancelBooking" disabled="{{isLoading}}">
+      {{isLoading ? '' : '取消日程'}}
+    </button>
+  </view>
+
+
+</view>

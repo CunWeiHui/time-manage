@@ -1,0 +1,280 @@
+.page {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #ffffff;
+}
+
+/* 日历头部 */
+.calendar-header {
+  background-color: #fff;
+  padding: 20rpx 30rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2rpx 8rpx rgba(0,0,0,0.05);
+}
+
+.year-month {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+}
+
+.prev-month, .next-month {
+  width: 48rpx;
+  height: 48rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.today-btn {
+  font-size: 28rpx;
+  padding: 12rpx 24rpx;
+  border-radius: 6rpx;
+  background-color: #4A76a8;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 星期标题 */
+.weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  background-color: #fff;
+  padding: 15rpx 0;
+}
+
+.weekday {
+  text-align: center;
+  font-size: 24rpx;
+  color: #999;
+}
+
+/* 日期网格 */
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  background-color: #fff;
+  padding-bottom: 20rpx;
+}
+
+.calendar-day {
+  aspect-ratio: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.day-number {
+  width: 70rpx;
+  height: 70rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 28rpx;
+  color: #333;
+  line-height: 1;
+}
+
+.day-number.other-month {
+  color: #ccc;
+}
+
+.day-number.today {
+  background-color: #73a1d6;
+  color: #fff;
+}
+
+.day-number.selected {
+  background-color: #295484;
+  color: #fff;
+}
+
+.day-number.today.selected {
+  background-color: #295484;
+  color: #fff;
+}
+
+.day-number.holiday {
+  color: #ff4d4f;
+  font-weight: bold;
+}
+
+.holiday-name {
+  font-size: 18rpx;
+  color: #ff4d4f;
+  margin-top: 4rpx;
+  text-align: center;
+  line-height: 1.2;
+  padding: 0 4rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
+}
+
+.booking-dot {
+  width: 12rpx;
+  height: 12rpx;
+  background-color: #ff4d4f;
+  border-radius: 50%;
+  position: absolute;
+  bottom: 16rpx;
+}
+
+.booking-count {
+  position: absolute;
+  top: 8rpx;
+  right: 8rpx;
+  background-color: #4a76a8;
+  color: #fff;
+  font-size: 18rpx;
+  padding: 2rpx 8rpx;
+  border-radius: 20rpx;
+  min-width: 28rpx;
+  text-align: center;
+}
+
+/* 日程列表 */
+.booking-list {
+  flex: 1;
+  padding: 20rpx;
+  overflow-y: auto;
+}
+
+.list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+
+.list-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.header-buttons {
+  display: flex;
+  gap: 16rpx;
+  align-items: center;
+}
+
+.sync-btn {
+  background-color: #fff !important;
+  color: #4A76a8 !important;
+  border: 1rpx solid #4A76a8 !important;
+  border-radius: 6rpx !important;
+  font-size: 22rpx !important;
+}
+
+.add-btn {
+  background-color: #4A76a8 !important;
+  border-radius: 6rpx !important;
+}
+
+.booking-item {
+  background-color: #fff;
+  border-radius: 16rpx;
+  padding: 24rpx;
+  margin-bottom: 16rpx;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 2rpx 8rpx rgba(0,0,0,0.05);
+}
+
+.booking-time {
+  width: 160rpx;
+}
+
+.time-text {
+  font-size: 28rpx;
+  color: #4A76a8;
+  font-weight: bold;
+}
+
+.booking-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8rpx;
+}
+
+.student-name {
+  font-size: 32rpx;
+  color: #333;
+  font-weight: 500;
+}
+
+.booking-status {
+  display: inline-block;
+  padding: 4rpx 16rpx;
+  border-radius: 20rpx;
+  font-size: 22rpx;
+}
+
+.status-confirmed {
+  background-color: #f6ffed;
+  color: #52c41a;
+}
+
+.status-pending {
+  background-color: #fff7e6;
+  color: #faad14;
+}
+
+.status-cancelled {
+  background-color: #c4cbcf;
+  color: #fff;
+}
+
+.schedule-arrow {
+  font-size: 32rpx;
+  color: #ccc;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 60rpx 40rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16rpx;
+}
+
+.empty-icon {
+  font-size: 64rpx;
+}
+
+.empty-title {
+  font-size: 30rpx;
+  color: #333;
+  font-weight: 500;
+}
+
+.empty-desc {
+  font-size: 26rpx;
+  color: #999;
+  margin-bottom: 10rpx;
+}
+
+.empty-btn {
+  background-color: #4A76a8 !important;
+  color: #fff !important;
+  border-radius: 6rpx !important;
+  margin-top: 10rpx;
+}

@@ -1,0 +1,56 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/booking/create",
+    "pages/booking/detail",
+    "pages/booking/list",
+    "pages/student/index",
+    "pages/student/create",
+    "pages/student/detail",
+    "pages/message/index",
+    "pages/profile/index",
+    "pages/debug/index"
+  ],
+  "window": {
+    "backgroundColor": "#ffffff",
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#4a76a8",
+    "navigationBarTitleText": "日程管理",
+    "navigationBarTextStyle": "white"
+  },
+  "tabBar": {
+    "color": "#999999",
+    "selectedColor": "#73a1d6",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "日历",
+        "iconPath": "images/calendar-default.png",
+        "selectedIconPath": "images/calendar-active.png"
+      },
+      {
+        "pagePath": "pages/student/index",
+        "text": "联系人",
+        "iconPath": "images/contacts-default.png",
+        "selectedIconPath": "images/contacts-active.png"
+      },
+      {
+        "pagePath": "pages/message/index",
+        "text": "提醒",
+        "iconPath": "images/message-default.png",
+        "selectedIconPath": "images/message-active.png"
+      },
+      {
+        "pagePath": "pages/profile/index",
+        "text": "我的",
+        "iconPath": "images/profile-default.png",
+        "selectedIconPath": "images/profile-active.png"
+      }
+    ]
+  },
+  "sitemapLocation": "sitemap.json",
+  "style": "v2",
+  "lazyCodeLoading": "requiredComponents"
+}

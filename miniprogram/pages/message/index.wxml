@@ -1,0 +1,29 @@
+<view class="page">
+  <!-- 消息列表 -->
+  <view class="message-list">
+    <view class="message-item {{item.read ? '' : 'unread'}}" wx:for="{{messageList}}" wx:key="id" bindtap="viewMessage" data-id="{{item.id}}">
+      <view class="message-icon {{item.read ? '' : 'unread'}}">
+        <text class="icon-text">{{item.icon}}</text>
+      </view>
+      <view class="message-content">
+        <view class="message-header">
+          <text class="message-title">{{item.title}}</text>
+          <text class="message-time">{{item.time}}</text>
+        </view>
+        <view class="message-body">
+          <text class="message-text">{{item.content}}</text>
+        </view>
+        <view class="message-footer" wx:if="{{item.bookingId}}">
+          <text class="booking-info">关联日程: {{item.bookingInfo}}</text>
+        </view>
+      </view>
+      <view class="message-arrow">></view>
+    </view>
+
+    <view class="empty-state" wx:if="{{messageList.length === 0}}">
+      <view class="empty-icon">🔔</view>
+      <text class="empty-title">暂无消息</text>
+      <text class="empty-desc">创建日程后，系统将在提醒时间发送通知</text>
+    </view>
+  </view>
+</view>

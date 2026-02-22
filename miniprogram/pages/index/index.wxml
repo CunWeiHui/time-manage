@@ -1,0 +1,63 @@
+<view class="page">
+  <!-- 日历头部 -->
+  <view class="calendar-header">
+    <view class="year-month">{{currentYear}}年{{currentMonth}}月</view>
+    <view class="header-actions">
+      <image class="prev-month" src="/images/left.png" bindtap="prevMonth" mode="aspectFit"></image>
+      <view class="today-btn" bindtap="goToday">今天</view>
+      <image class="next-month" src="/images/right.png" bindtap="nextMonth" mode="aspectFit"></image>
+    </view>
+  </view>
+
+  <!-- 星期标题 -->
+  <view class="weekdays">
+    <view class="weekday">日</view>
+    <view class="weekday">一</view>
+    <view class="weekday">二</view>
+    <view class="weekday">三</view>
+    <view class="weekday">四</view>
+    <view class="weekday">五</view>
+    <view class="weekday">六</view>
+  </view>
+
+  <!-- 日期网格 -->
+  <view class="calendar-grid">
+    <view class="calendar-day" wx:for="{{calendarDays}}" wx:key="index" bindtap="selectDay" data-date="{{item.date}}">
+      <view class="day-number {{item.isToday ? 'today' : ''}} {{item.isSelected ? 'selected' : ''}} {{!item.isCurrentMonth ? 'other-month' : ''}} {{item.holiday && item.holiday.status === 2 ? 'holiday' : ''}}">
+        {{item.day}}
+      </view>
+      <view class="holiday-name" wx:if="{{item.holiday && item.holiday.name}}">{{item.holiday.name}}</view>
+      <view class="booking-count" wx:if="{{item.bookingCount > 0}}">{{item.bookingCount}}</view>
+    </view>
+  </view>
+
+  <!-- 选中日期的预约列表 -->
+  <view class="booking-list">
+    <view class="list-header">
+      <text class="list-title">{{selectedDate}} 的日程</text>
+      <view class="header-buttons">
+        <button class="add-btn" bindtap="addBooking" size="mini" type="primary">+ 新增日程</button>
+      </view>
+    </view>
+
+    <view class="booking-item" wx:for="{{dayBookings}}" wx:key="id" bindtap="viewBooking" data-id="{{item.id}}">
+      <view class="booking-time">
+        <text class="time-text">{{item.startTime}}-{{item.endTime}}</text>
+      </view>
+      <view class="booking-info">
+        <text class="student-name">{{item.studentName}}</text>
+        <view class="booking-status status-{{item.status}}">
+          {{item.statusText}}
+        </view>
+      </view>
+      <view class="booking-arrow">></view>
+    </view>
+
+    <view class="empty-state" wx:if="{{dayBookings.length === 0}}">
+      <view class="empty-icon">📅</view>
+      <text class="empty-title">暂无日程</text>
+      <text class="empty-desc">点击下方按钮创建当日日程</text>
+      <button class="empty-btn" bindtap="addBooking" size="mini">+ 创建日程</button>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,102 @@
+<view class="page">
+  <view class="form-container">
+    <view class="form-section">
+      <view class="section-title">基本信息</view>
+
+      <view class="form-item">
+        <text class="label">人员</text>
+        <picker mode="selector" range="{{studentList}}" range-key="name" bindchange="onStudentChange">
+          <view class="picker-input">
+            {{selectedStudent ? selectedStudent.name : '请选择人员'}}
+            <text class="arrow">></text>
+          </view>
+        </picker>
+      </view>
+
+      <view class="form-item">
+        <text class="label">日期</text>
+        <picker mode="date" value="{{formData.date}}" start="{{minDate}}" end="{{maxDate}}" bindchange="onDateChange">
+          <view class="picker-input">
+            {{formData.date || '请选择日期'}}
+            <text class="arrow">></text>
+          </view>
+        </picker>
+      </view>
+
+      <view class="form-item-row">
+        <view class="form-item half">
+          <text class="label">开始时间</text>
+          <picker mode="time" value="{{formData.startTime}}" bindchange="onStartTimeChange">
+            <view class="picker-input">
+              {{formData.startTime || '请选择'}}
+              <text class="arrow">></text>
+            </view>
+          </picker>
+        </view>
+        <view class="form-item half">
+          <text class="label">结束时间</text>
+          <picker mode="time" value="{{formData.endTime}}" bindchange="onEndTimeChange">
+            <view class="picker-input">
+              {{formData.endTime || '请选择'}}
+              <text class="arrow">></text>
+            </view>
+          </picker>
+        </view>
+      </view>
+
+      <view class="form-item">
+        <text class="label">课程内容</text>
+        <input class="input" placeholder="请输入课程内容" value="{{formData.courseContent}}" bindinput="onContentInput" />
+      </view>
+
+      <view class="form-item">
+        <text class="label">备注</text>
+        <textarea class="textarea" placeholder="请输入备注信息（选填）" value="{{formData.remark}}" bindinput="onRemarkInput" maxlength="200" />
+      </view>
+    </view>
+
+    <view class="form-section">
+      <view class="section-title">提醒设置</view>
+
+      <view class="form-item">
+        <text class="label">发送提醒</text>
+        <switch checked="{{formData.sendReminder}}" bindchange="onReminderChange" color="#1890ff" />
+      </view>
+
+      <view class="form-item" wx:if="{{formData.sendReminder}}">
+        <text class="label">提醒时间</text>
+        <picker mode="selector" range="{{reminderTimes}}" range-key="label" value="{{reminderTimeIndex}}" bindchange="onReminderTimeChange">
+          <view class="picker-input">
+            {{reminderTimes[reminderTimeIndex].label}}
+            <text class="arrow">></text>
+          </view>
+        </picker>
+      </view>
+    </view>
+
+    <!-- 冲突提示 -->
+    <view class="conflict-warning {{hasConflict ? 'show' : ''}}" wx:if="{{hasConflict}}">
+      <view class="warning-icon-wrapper">
+        <text class="warning-icon">⚠</text>
+      </view>
+      <view class="warning-content">
+        <text class="warning-title">时间冲突</text>
+        <text class="warning-text">该时间段已有日程安排，请选择其他时间</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="footer">
+    <view class="save-tip" wx:if="{{!canSave}}">
+      <text wx:if="{{!formData.studentId}}">请选择人员</text>
+      <text wx:elif="{{!formData.date}}">请选择日期</text>
+      <text wx:elif="{{!formData.startTime}}">请选择开始时间</text>
+      <text wx:elif="{{!formData.endTime}}">请选择结束时间</text>
+      <text wx:elif="{{!formData.courseContent}}">请输入课程内容</text>
+      <text wx:elif="{{hasConflict}}">存在时间冲突，请调整</text>
+    </view>
+    <button class="save-btn" bindtap="saveBooking" disabled="{{!canSave}}">
+      {{isSaving ? '' : '保存日程'}}
+    </button>
+  </view>
+</view>
