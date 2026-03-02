@@ -7,26 +7,27 @@ Page({
     }
   },
 
-  onLoad() {
+  async onLoad() {
+    await getApp().getCloudAsync();
     this.loadStats();
   },
 
-  onShow() {
+  async onShow() {
+    await getApp().getCloudAsync();
     this.loadStats();
   },
 
   async loadStats() {
+    const cloud = getApp().globalData.cloud;
     try {
       // 并行获取统计数据
       const [studentRes, todayBookingRes, totalBookingRes] = await Promise.all([
-        wx.cloud.callFunction({
+        cloud.callFunction({
           name: 'student',
-          env: 'cloud1-5g9uss0gfe250350',
           data: { action: 'list', data: { pageSize: 1 } }
         }),
-        wx.cloud.callFunction({
+        cloud.callFunction({
           name: 'booking',
-          env: 'cloud1-5g9uss0gfe250350',
           data: {
             action: 'list',
             data: {
@@ -35,9 +36,8 @@ Page({
             }
           }
         }),
-        wx.cloud.callFunction({
+        cloud.callFunction({
           name: 'booking',
-          env: 'cloud1-5g9uss0gfe250350',
           data: { action: 'list', data: { pageSize: 1 } }
         })
       ]);

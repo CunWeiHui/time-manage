@@ -85,7 +85,7 @@
   "date": "预约日期",
   "startTime": "开始时间",
   "endTime": "结束时间",
-  "courseContent": "课程内容",
+  "courseContent": "日程内容",
   "remark": "备注",
   "status": "状态(pending/confirmed/completed/cancelled)",
   "sendReminder": "是否发送提醒",
@@ -132,7 +132,7 @@
 ### 2. 预约管理 (pages/booking)
 **创建预约 (create)：**
 - 选择人员、日期、时间段
-- 填写课程内容和备注
+- 填写日程内容和备注
 - 设置提醒时间和方式
 - 实时检测时间冲突
 
@@ -248,7 +248,7 @@ const hasConflict = existingBookings.some(booking => {
 - thing1: 人员姓名
 - time2: 课程开始时间
 - time3: 课程结束时间
-- thing4: 课程内容
+- thing4: 日程内容
 ```
 
 ## 业务流程
@@ -257,7 +257,7 @@ const hasConflict = existingBookings.some(booking => {
 ```
 1. 选择人员 → 2. 选择日期时间 → 3. 检测时间冲突
      ↓                                         ↓
-5. 设置提醒 → 4. 冲突则提示重新选择 → 6. 填写课程内容
+5. 设置提醒 → 4. 冲突则提示重新选择 → 6. 填写日程内容
      ↓                                         ↓
               7. 保存预约 → 8. 创建消息通知
 ```
@@ -321,6 +321,94 @@ cancelled (已取消)
 - **圆角设计** - 16rpx 圆角，柔和视觉效果
 - **阴影效果** - 轻微阴影，层次分明
 - **状态标签** - 不同颜色区分状态
+
+## 共享云环境架构
+
+本项目采用共享云环境模式，调用 scoreborad 项目的云开发资源。
+
+### 架构说明
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                        项目关系图                                │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│   ┌─────────────────┐              ┌─────────────────┐          │
+│   │   time-manage   │              │    scoreborad  │          │
+│   │   (调用方)      │    共享      │    (资源方)    │          │
+│   │   小程序 A      │ ──────────→ │    小程序 B     │          │
+│   └────────┬────────┘   云环境    └────────┬────────┘          │
+│            │                               │                    │
+│            │  wx.cloud.init()              │  云函数部署        │
+│            │  resourceAppid               │  - booking         │
+│            │  resourceEnv                 │  - cloudbase_auth │
+│            │                               │  - getHolidays    │
+│            └───────────────────────────────┘                    │
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+### 关键概念
+
+- **资源方 (scoreborad)**：拥有云开发环境的小程序，负责部署云函数和数据库
+- **调用方 (time-manage)**：通过共享云环境调用资源方的云函数
+
+### 配置说明
+
+`miniprogram/env.js` 中配置：
+```javascript
+module.exports = {
+  envId: 'cloud1-3go4l2wh77af1171',      // 资源方环境ID
+  resourceAppid: 'wxxxxxxxxx',            // 资源方小程序AppID
+  resourceEnv: 'cloud1-3go4l2wh77af1171'  // 资源方云环境ID
+};
+```
+
+### 初始化流程
+
+1. **app.js 初始化**
+   - `wx.cloud.init()` - 初始化默认云实例
+   - `new wx.cloud.Cloud()` - 创建共享云实例
+   - 设置 `cloudReady: true` 标志
+
+2. **页面调用**
+   - 使用 `getApp().getCloud()` 获取共享云实例
+   - 确保在 `cloudReady` 为 true 后再调用云函数
+
+### cloudbase_auth 云函数
+
+**重要**：此云函数必须在 **scoreborad** 项目中部署，不能在 time-manage 中。
+
+在 scoreborad 项目的 `cloudfunctions/cloudbase_auth/index.js` 中：
+```javascript
+const cloud = require('wx-server-sdk')
+cloud.init({
+  env: cloud.DYNAMIC_CURRENT_ENV
+})
+
+exports.main = async (event, context) => {
+  const wxContext = cloud.getWXContext()
+  // 返回调用方的 OpenID，用于跨账号云函数调用鉴权
+  return {
+    cloudBaseCUid: wxContext.OPENID || wxContext.FROM_OPENID
+  }
+}
+```
+
+部署步骤：
+1. 在微信开发者工具中打开 scoreborad 项目
+2. 右键点击 `cloudfunctions/cloud目录
+3.base_auth`  选择「上传并部署-云端安装依赖」
+
+### 常见问题
+
+**Q: "Cloud API isn't enabled, please call wx.cloud.init first"**
+- 确保 app.js 中已正确初始化云开发
+- 页面 onLoad 可能在 app.onLaunch 之前执行，需要添加 cloudReady 检查
+
+**Q: "cloudbase_auth 返回无效的回包"**
+- 确保 cloudbase_auth 云函数返回 `cloudBaseCUid` 字段
+- 确保该云函数已在 scoreborad 项目中正确部署
 
 ## 部署指南
 

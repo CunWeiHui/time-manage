@@ -46,11 +46,11 @@ Page({
     if (!this.data.canSave || this.data.isSaving) return;
 
     this.setData({ isSaving: true });
+    const cloud = getApp().globalData.cloud;
 
     try {
-      const res = await wx.cloud.callFunction({
+      const res = await cloud.callFunction({
         name: 'student',
-        env: 'cloud1-5g9uss0gfe250350',
         data: {
           action: 'create',
           data: this.data.formData

@@ -14,7 +14,8 @@ Page({
     ]
   },
 
-  onLoad() {
+  async onLoad() {
+    await app.getCloudAsync();
     this.setData({ envId: app.globalData.env });
     this.checkCloud();
     this.checkAll();
@@ -69,9 +70,9 @@ Page({
           break;
       }
 
-      const res = await wx.cloud.callFunction({
+      const cloud = getApp().globalData.cloud;
+      const res = await cloud.callFunction({
         name: funcName,
-        env: 'cloud1-5g9uss0gfe250350',
         data: {
           action: action,
           data: {}
@@ -102,10 +103,10 @@ Page({
         if (res.confirm) {
           wx.showLoading({ title: '初始化中...' });
 
+          const cloud = getApp().globalData.cloud;
           try {
-            const res = await wx.cloud.callFunction({
+            const res = await cloud.callFunction({
               name: 'database',
-              env: 'cloud1-5g9uss0gfe250350',
               data: {
                 action: 'initData'
               }

@@ -4,11 +4,13 @@ Page({
     studentList: []
   },
 
-  onLoad() {
+  async onLoad() {
+    await getApp().getCloudAsync();
     this.loadStudents();
   },
 
-  onShow() {
+  async onShow() {
+    await getApp().getCloudAsync();
     this.loadStudents();
   },
 
@@ -25,10 +27,10 @@ Page({
   async loadStudents() {
     wx.showLoading({ title: '加载中...' });
 
+    const cloud = getApp().globalData.cloud;
     try {
-      const res = await wx.cloud.callFunction({
+      const res = await cloud.callFunction({
         name: 'student',
-        env: 'cloud1-5g9uss0gfe250350',
         data: {
           action: 'list',
           data: {

@@ -26,7 +26,8 @@ Page({
     isSaving: false
   },
 
-  onLoad(options) {
+  async onLoad(options) {
+    await getApp().getCloudAsync();
     const today = new Date();
     const threeMonthsLater = new Date();
     threeMonthsLater.setMonth(threeMonthsLater.getMonth() + 3);
@@ -49,10 +50,10 @@ Page({
   },
 
   async loadStudents() {
+    const cloud = getApp().globalData.cloud;
     try {
-      const res = await wx.cloud.callFunction({
+      const res = await cloud.callFunction({
         name: 'student',
-        env: 'cloud1-5g9uss0gfe250350',
         data: {
           action: 'list'
         }
@@ -187,10 +188,10 @@ Page({
       return;
     }
 
+    const cloud = getApp().globalData.cloud;
     try {
-      const res = await wx.cloud.callFunction({
+      const res = await cloud.callFunction({
         name: 'booking',
-        env: 'cloud1-5g9uss0gfe250350',
         data: {
           action: 'checkConflict',
           data: { date, startTime, endTime }
@@ -214,10 +215,10 @@ Page({
 
     this.setData({ isSaving: true });
 
+    const cloud = getApp().globalData.cloud;
     try {
-      const res = await wx.cloud.callFunction({
+      const res = await cloud.callFunction({
         name: 'booking',
-        env: 'cloud1-5g9uss0gfe250350',
         data: {
           action: 'create',
           data: this.data.formData

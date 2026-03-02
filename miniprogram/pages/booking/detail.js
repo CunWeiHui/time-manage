@@ -5,7 +5,8 @@ Page({
     isLoading: false
   },
 
-  onLoad(options) {
+  async onLoad(options) {
+    await getApp().getCloudAsync();
     const id = options.id;
     this.setData({ bookingId: id });
     this.loadBooking();
@@ -25,10 +26,10 @@ Page({
   async loadBooking() {
     wx.showLoading({ title: '加载中...' });
 
+    const cloud = getApp().globalData.cloud;
     try {
-      const res = await wx.cloud.callFunction({
+      const res = await cloud.callFunction({
         name: 'booking',
-        env: 'cloud1-5g9uss0gfe250350',
         data: {
           action: 'get',
           data: { id: this.data.bookingId }
@@ -128,11 +129,11 @@ Page({
     };
 
     this.setData({ isLoading: true });
+    const cloud = getApp().globalData.cloud;
 
     try {
-      const res = await wx.cloud.callFunction({
+      const res = await cloud.callFunction({
         name: 'booking',
-        env: 'cloud1-5g9uss0gfe250350',
         data: {
           action: actionMap[status],
           data: { id: this.data.bookingId }

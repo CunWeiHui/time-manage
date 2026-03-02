@@ -81,7 +81,7 @@ const templateId = 'your-template-id-here'; // 替换为你的模板ID
 - thing1: 人员姓名
 - time2: 课程开始时间
 - time3: 课程结束时间
-- thing4: 课程内容
+- thing4: 日程内容
 
 ## 五、小程序配置
 

@@ -12,11 +12,13 @@ Page({
     ]
   },
 
-  onLoad() {
+  async onLoad() {
+    await getApp().getCloudAsync();
     this.loadBookings();
   },
 
-  onShow() {
+  async onShow() {
+    await getApp().getCloudAsync();
     this.loadBookings();
   },
 
@@ -31,10 +33,10 @@ Page({
 
     this.setData({ loading: true });
 
+    const cloud = getApp().getCloud();
     try {
-      const res = await wx.cloud.callFunction({
+      const res = await cloud.callFunction({
         name: 'booking',
-        env: 'cloud1-5g9uss0gfe250350',
         data: {
           action: 'list',
           data: {
@@ -122,11 +124,11 @@ Page({
 
   async performDelete(id) {
     wx.showLoading({ title: '删除中...' });
+    const cloud = getApp().globalData.cloud;
 
     try {
-      const res = await wx.cloud.callFunction({
+      const res = await cloud.callFunction({
         name: 'booking',
-        env: 'cloud1-5g9uss0gfe250350',
         data: {
           action: 'delete',
           data: { id }

@@ -16,7 +16,6 @@ Page({
       selectedDate: this.formatDate(today)
     });
     this.generateCalendar();
-    this.loadBookings();
     this.loadHolidays();
   },
 
@@ -145,10 +144,10 @@ Page({
       wx.showLoading({ title: '加载中...' });
     }
 
+    const cloud =  await getApp().getCloudAsync();
     try {
-      const res = await wx.cloud.callFunction({
+      const res = await cloud.callFunction({
         name: 'booking',
-        env: 'cloud1-5g9uss0gfe250350',
         data: {
           action: 'list',
           data: {
@@ -247,15 +246,14 @@ Page({
       }
 
       // 并行查询本月和下月的节假日数据
+      const cloud =  await getApp().getCloudAsync();
       const [currentMonthRes, nextMonthRes] = await Promise.all([
-        wx.cloud.callFunction({
+        cloud.callFunction({
           name: 'getHolidays',
-          env: 'cloud1-5g9uss0gfe250350',
           data: { year: currentYear, month: currentMonth }
         }),
-        wx.cloud.callFunction({
+        cloud.callFunction({
           name: 'getHolidays',
-          env: 'cloud1-5g9uss0gfe250350',
           data: { year: nextYear, month: nextMonth }
         })
       ]);

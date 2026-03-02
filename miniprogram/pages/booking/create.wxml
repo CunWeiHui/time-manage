@@ -45,8 +45,8 @@
       </view>
 
       <view class="form-item">
-        <text class="label">课程内容</text>
-        <input class="input" placeholder="请输入课程内容" value="{{formData.courseContent}}" bindinput="onContentInput" />
+        <text class="label">日程内容</text>
+        <input class="input" placeholder="请输入日程内容" value="{{formData.courseContent}}" bindinput="onContentInput" />
       </view>
 
       <view class="form-item">
@@ -92,7 +92,7 @@
       <text wx:elif="{{!formData.date}}">请选择日期</text>
       <text wx:elif="{{!formData.startTime}}">请选择开始时间</text>
       <text wx:elif="{{!formData.endTime}}">请选择结束时间</text>
-      <text wx:elif="{{!formData.courseContent}}">请输入课程内容</text>
+      <text wx:elif="{{!formData.courseContent}}">请输入日程内容</text>
       <text wx:elif="{{hasConflict}}">存在时间冲突，请调整</text>
     </view>
     <button class="save-btn" bindtap="saveBooking" disabled="{{!canSave}}">

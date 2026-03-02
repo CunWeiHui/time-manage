@@ -3,21 +3,23 @@ Page({
     messageList: []
   },
 
-  onLoad() {
+  async onLoad() {
+    await getApp().getCloudAsync();
     this.loadMessages();
   },
 
-  onShow() {
+  async onShow() {
+    await getApp().getCloudAsync();
     this.loadMessages();
   },
 
   async loadMessages() {
     wx.showLoading({ title: '加载中...' });
+    const cloud = getApp().globalData.cloud;
 
     try {
-      const res = await wx.cloud.callFunction({
+      const res = await cloud.callFunction({
         name: 'message',
-        env: 'cloud1-5g9uss0gfe250350',
         data: {
           action: 'list'
         }
@@ -75,10 +77,10 @@ Page({
   },
 
   async updateMessageRead(id) {
+    const cloud = getApp().globalData.cloud;
     try {
-      await wx.cloud.callFunction({
+      await cloud.callFunction({
         name: 'message',
-        env: 'cloud1-5g9uss0gfe250350',
         data: {
           action: 'markRead',
           data: { id }
